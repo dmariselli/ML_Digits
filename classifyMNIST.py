@@ -79,6 +79,7 @@ biasesOut = tf.Variable(tf.zeros([outputLayerSize]), name='biasesOut')
 decoded = tf.nn.sigmoid(tf.matmul(encoded, weightsHidOut) + biasesOut)
 
 loss = (tf.reduce_mean(tf.square(tf.sub(y, decoded))))
+
 train_op = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
 
 
@@ -99,7 +100,19 @@ def checkErrors(ins,outs,flag=False):
     print "Number of Tests ",len(ins)
     for k in range(len(ins)):
         l, d = sess.run([loss,decoded], feed_dict={x: [ins[k]], y:[outs[k]]})
-        if (l>0.05):
+        # Classified as an error if the value of the invalid buckets is less than 0.3 
+        # and the value of the valid bucket is greater than 0.7.
+        isError = False
+        highCutOff = 0.7
+        lowCutOff = 0.3
+        for i in range(len(d[0])):
+            if outs[k][i] == 1:
+                if d[0][i] < highCutOff:
+                    isError = True
+            else:
+                if d[0][i] > lowCutOff:
+                    isError = True
+        if isError:
             errors = errors +1
         if flag:
             print "test number and error", k, l
