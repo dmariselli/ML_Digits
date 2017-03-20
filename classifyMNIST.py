@@ -129,6 +129,8 @@ def checkErrors(ins,outs,flag=False,end=False):
             print d
             print "desired"
             print outs[k]
+        if end and k == len(ins)-1:
+            print "loss ", l
             
     if end:
         print "Total probable errors ", errors
