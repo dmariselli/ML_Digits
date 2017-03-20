@@ -23,7 +23,8 @@ batch_size = 10
 # default hyperparameters
 
 hiddenLayerSize = 10
-learning_rate = 0.1
+# Part 3
+learning_rate = 20.0
 
 print sys.argv
 
@@ -95,11 +96,13 @@ sess.run(init)
 
 test_writer = tf.summary.FileWriter('./test', sess.graph)
 
-def checkErrors(ins,outs,flag=False):
+def checkErrors(ins,outs,flag=False,end=False):
     errors = 0
-    print "Number of Tests ",len(ins)
+    if end:
+        print "Number of Tests ",len(ins)
     for k in range(len(ins)):
         l, d = sess.run([loss,decoded], feed_dict={x: [ins[k]], y:[outs[k]]})
+        # Part 2
         # Classified as an error if the value of the invalid buckets is less than 0.3 
         # and the value of the valid bucket is greater than 0.7.
         isError = False
@@ -121,7 +124,8 @@ def checkErrors(ins,outs,flag=False):
             print "desired"
             print outs[k]
             
-    print "Total probable errors ", errors
+    if end:
+        print "Total probable errors ", errors
     
 
 for i in range(epochs):
@@ -136,22 +140,22 @@ for i in range(epochs):
     write1 = sess.run(sum1, feed_dict={x:trainPoints,y:trainPointsA})
     test_writer.add_summary(write1,i*epochs+j)
     if i % howOften == 0:
-        print 'epoch ',i
+        # print 'epoch ',i
         big_loss = sess.run(loss,feed_dict={x:points,y:pointsA})
         valid_loss = sess.run(loss,feed_dict={x:validation,y:validationA})
-        print 'Total loss', big_loss
-        print 'Validation Set Loss', valid_loss 
+        # print 'Total loss', big_loss
+        # print 'Validation Set Loss', valid_loss 
         write2 = sess.run(sum2, feed_dict={x:points,y:pointsA})
         test_writer.add_summary(write2,i)
 
-        print 'Test Set Errors'
+        # print 'Test Set Errors'
         checkErrors(points,pointsA)
-        print "Validation errors"
+        # print "Validation errors"
         checkErrors(validation, validationA)
 
-checkErrors(points,pointsA)
+checkErrors(points,pointsA,False,True)
 
-checkErrors(validation, validationA,False)
+checkErrors(validation, validationA,False,True)
 
 exit()
 
