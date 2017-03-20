@@ -3,6 +3,7 @@ Done
 
 Part 2
 New way to compute number of errors: the number that matches the ‘1’ bucket should be above 0.7, while the numbers that match the ‘0’ buckets should be below 0.3
+
 Part 3
 Learning Rate - Error/Total
 0.002 - 4992/5000
@@ -14,3 +15,23 @@ Learning Rate - Error/Total
 20.0 - 1737/5000
 
 Part 4
+After changing the program to use momentum gradient descent with a momentum value of 0.9:
+
+Learning Rate - Error/Total
+0.002 - 5000/5000
+0.01 - 4994/5000
+0.05 - 4064/5000
+0.2 - 2332/5000
+1.0 - 1768/5000
+5.0 - 2554/5000
+20.0 - 4606/5000
+
+Extra Tuning
+1.25 - 1800/5000
+1.45 - 1716/5000
+1.5 - 1461/5000 | 1585/5000
+1.6 - 2216/5000
+1.75 - 1499/5000
+2 - 1906/5000
+
+Part 5

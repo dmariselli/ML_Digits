@@ -24,7 +24,7 @@ batch_size = 10
 
 hiddenLayerSize = 10
 # Part 3
-learning_rate = 20.0
+learning_rate = 1.5
 
 print sys.argv
 
@@ -81,7 +81,9 @@ decoded = tf.nn.sigmoid(tf.matmul(encoded, weightsHidOut) + biasesOut)
 
 loss = (tf.reduce_mean(tf.square(tf.sub(y, decoded))))
 
-train_op = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
+# train_op = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
+# Part 4
+train_op = tf.train.MomentumOptimizer(learning_rate, 0.9).minimize(loss)
 
 
 num_samples = len(points)
