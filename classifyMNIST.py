@@ -79,7 +79,11 @@ weightsHidOut = tf.Variable(tf.random_normal([hiddenLayerSize, outputLayerSize],
 biasesOut = tf.Variable(tf.zeros([outputLayerSize]), name='biasesOut')
 decoded = tf.nn.sigmoid(tf.matmul(encoded, weightsHidOut) + biasesOut)
 
+# Part 5
+# lambda_ = 0.001
+# print "lambda value      ", lambda_
 loss = (tf.reduce_mean(tf.square(tf.sub(y, decoded))))
+# (lambda_ * tf.reduce_mean(tf.square(tf.add(weightsInHid, weightsHidOut))))
 
 # train_op = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
 # Part 4
@@ -105,8 +109,8 @@ def checkErrors(ins,outs,flag=False,end=False):
     for k in range(len(ins)):
         l, d = sess.run([loss,decoded], feed_dict={x: [ins[k]], y:[outs[k]]})
         # Part 2
-        # Classified as an error if the value of the invalid buckets is less than 0.3 
-        # and the value of the valid bucket is greater than 0.7.
+        # Classified as an error if the value of the invalid buckets is more than 0.3 
+        # and the value of the valid bucket is less than 0.7.
         isError = False
         highCutOff = 0.7
         lowCutOff = 0.3
