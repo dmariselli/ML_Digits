@@ -80,10 +80,10 @@ biasesOut = tf.Variable(tf.zeros([outputLayerSize]), name='biasesOut')
 decoded = tf.nn.sigmoid(tf.matmul(encoded, weightsHidOut) + biasesOut)
 
 # Part 5
-# lambda_ = 0.001
-# print "lambda value      ", lambda_
-loss = (tf.reduce_mean(tf.square(tf.sub(y, decoded))))
-# (lambda_ * tf.reduce_mean(tf.square(tf.add(weightsInHid, weightsHidOut))))
+lambda_ = 0.000001
+l2 = tf.reduce_sum(tf.square(weightsInHid)) + tf.reduce_sum(tf.square(weightsHidOut))
+print "lambda value      ", lambda_
+loss = (tf.reduce_mean(tf.square(tf.sub(y, decoded)))) + (lambda_ * l2)
 
 # train_op = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
 # Part 4
@@ -112,8 +112,8 @@ def checkErrors(ins,outs,flag=False,end=False):
         # Classified as an error if the value of the invalid buckets is more than 0.3 
         # and the value of the valid bucket is less than 0.7.
         isError = False
-        highCutOff = 0.7
-        lowCutOff = 0.3
+        highCutOff = 0.9
+        lowCutOff = 0.1
         for i in range(len(d[0])):
             if outs[k][i] == 1:
                 if d[0][i] < highCutOff:
