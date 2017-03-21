@@ -112,8 +112,8 @@ def checkErrors(ins,outs,flag=False,end=False):
         # Classified as an error if the value of the invalid buckets is more than 0.3 
         # and the value of the valid bucket is less than 0.7.
         isError = False
-        highCutOff = 0.9
-        lowCutOff = 0.1
+        highCutOff = 0.85
+        lowCutOff = 0.15
         for i in range(len(d[0])):
             if outs[k][i] == 1:
                 if d[0][i] < highCutOff:
@@ -129,8 +129,6 @@ def checkErrors(ins,outs,flag=False,end=False):
             print d
             print "desired"
             print outs[k]
-        if end and k == len(ins)-1:
-            print "loss ", l
             
     if end:
         print "Total probable errors ", errors
@@ -161,8 +159,10 @@ for i in range(epochs):
         # print "Validation errors"
         checkErrors(validation, validationA)
 
+print "Loss of Training", sess.run(loss,feed_dict={x:points,y:pointsA})
 checkErrors(points,pointsA,False,True)
 
+print "Loss of Test", sess.run(loss,feed_dict={x:validation,y:validationA})
 checkErrors(validation, validationA,False,True)
 
 exit()
