@@ -22,7 +22,7 @@ batch_size = 10
 
 # default hyperparameters
 
-hiddenLayerSize = 10
+hiddenLayerSize = 20
 # Part 3
 learning_rate = 1.8
 
