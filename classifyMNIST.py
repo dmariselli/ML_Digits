@@ -109,8 +109,8 @@ def checkErrors(ins,outs,flag=False,end=False):
     for k in range(len(ins)):
         l, d = sess.run([loss,decoded], feed_dict={x: [ins[k]], y:[outs[k]]})
         # Part 2
-        # Classified as an error if the value of the invalid buckets is more than 0.3 
-        # and the value of the valid bucket is less than 0.7.
+        # Classified as an error if the value of the invalid buckets is more than 0.15 
+        # and the value of the valid bucket is less than 0.85.
         isError = False
         highCutOff = 0.85
         lowCutOff = 0.15
