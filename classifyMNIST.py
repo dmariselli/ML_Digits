@@ -24,7 +24,7 @@ batch_size = 10
 
 hiddenLayerSize = 10
 # Part 3
-learning_rate = 1.5
+learning_rate = 1.8
 
 print sys.argv
 
