@@ -43,8 +43,8 @@ for o in range(1,len(sys.argv),2):
     elif arg in ['-b', '-batchsize']:
         batch_size = int(sys.argv[o+1])
 
-points = mnist.test.images[:training_size,:]
-pointsA = mnist.test.labels[:training_size,:]
+points = mnist.train.images
+pointsA = mnist.train.labels
 
 validation = mnist.validation.images
 validationA = mnist.validation.labels
@@ -81,7 +81,7 @@ decoded = tf.nn.sigmoid(tf.matmul(encoded, weightsHidOut) + biasesOut)
 
 # Part 5
 lambda_ = 0.000001
-l2 = tf.reduce_sum(tf.square(weightsInHid)) + tf.reduce_sum(tf.square(weightsHidOut))
+l2 = tf.nn.l2_loss(weightsInHid) + tf.nn.l2_loss(weightsHidOut)
 print "lambda value      ", lambda_
 loss = (tf.reduce_mean(tf.square(tf.sub(y, decoded)))) + (lambda_ * l2)
 
