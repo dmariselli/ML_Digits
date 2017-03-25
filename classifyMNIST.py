@@ -7,8 +7,8 @@ from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
 
 
-print 'Testing   Set count ', mnist.train.images.shape
-print 'Training   Set count ', mnist.test.images.shape
+print 'Training   Set count ', mnist.train.images.shape
+print 'Testing   Set count ', mnist.test.images.shape
 print 'Validation Set count ', mnist.validation.images.shape
 
 
@@ -22,7 +22,7 @@ batch_size = 10
 
 # default hyperparameters
 
-hiddenLayerSize = 20
+hiddenLayerSize = 130
 # Part 3
 learning_rate = 1.8
 
@@ -43,11 +43,11 @@ for o in range(1,len(sys.argv),2):
     elif arg in ['-b', '-batchsize']:
         batch_size = int(sys.argv[o+1])
 
-points = mnist.test.images[:training_size,:]
-pointsA = mnist.test.labels[:training_size,:]
+points = mnist.train.images
+pointsA = mnist.train.labels
 
-validation = mnist.validation.images
-validationA = mnist.validation.labels
+validation = mnist.test.images
+validationA = mnist.test.labels
 
 inputLayerSize = len(points[0])
 outputLayerSize = 10
