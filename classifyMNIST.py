@@ -43,8 +43,8 @@ for o in range(1,len(sys.argv),2):
     elif arg in ['-b', '-batchsize']:
         batch_size = int(sys.argv[o+1])
 
-points = mnist.train.images
-pointsA = mnist.train.labels
+points = mnist.test.images[:training_size,:]
+pointsA = mnist.test.labels[:training_size,:]
 
 validation = mnist.validation.images
 validationA = mnist.validation.labels
@@ -80,14 +80,15 @@ biasesOut = tf.Variable(tf.zeros([outputLayerSize]), name='biasesOut')
 decoded = tf.nn.sigmoid(tf.matmul(encoded, weightsHidOut) + biasesOut)
 
 # Part 5
-lambda_ = 0.000001
-l2 = tf.nn.l2_loss(weightsInHid) + tf.nn.l2_loss(weightsHidOut)
+lambda_ = 0.00001
+l2 = tf.reduce_sum(tf.square(weightsInHid)) + tf.reduce_sum(tf.square(weightsHidOut))
 print "lambda value      ", lambda_
-loss = (tf.reduce_mean(tf.square(tf.sub(y, decoded)))) + (lambda_ * l2)
+loss = (tf.reduce_mean(tf.square(tf.sub(y, decoded))))
+regularized = loss + (lambda_ * l2)
 
 # train_op = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
 # Part 4
-train_op = tf.train.MomentumOptimizer(learning_rate, 0.9).minimize(loss)
+train_op = tf.train.MomentumOptimizer(learning_rate, 0.9).minimize(regularized)
 
 
 num_samples = len(points)
